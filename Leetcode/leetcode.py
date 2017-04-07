@@ -18,9 +18,9 @@ import click
 
 
 BASE_URL = 'https://leetcode.com/problems/{problem_name}/'
-COOKIES_RAW = """
-LEETCODE_SESSION=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhYnlraWNrQDE2My5jb20iLCJ1c2VyX3NsdWciOiJiYWJ5a2ljazE2M2NvbSIsIl9hdXRoX3VzZXJfaWQiOiI1NDQ5NiIsInRpbWVzdGFtcCI6IjIwMTctMDQtMDcgMDA6MzQ6MjIuMDQ1OTE1KzAwOjAwIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJpZCI6NTQ0OTYsIl9zZXNzaW9uX2V4cGlyeSI6MTIwOTYwMCwiX2F1dGhfdXNlcl9oYXNoIjoiYThkOTRkODJmMmJmZWE0MWU2YTk2M2NlYmQ4NmRkOGMxNDRjNGZlMCIsImVtYWlsIjoiYmFieWtpY2tAMTYzLmNvbSJ9.GEy80G5RRcZHiydyuukjVV4ZUX5iEeoOVo4FfptrHdw; express.sid=s%3ANP9IS4wHjstyXbLJ8JEvLcQLdQcOUYtn.FkHJPgJ%2FBNFGep2STc7RWvvwEMN7Bc6ABb%2BNxtAoyIc; csrftoken=foO40MbfzaBKJfXohs4OMVqllD550SorP1Kje4AdXfUTakvf0zdRchzwiSlkvvM2; _ga=GA1.2.1056595494.1491525212; __atuvc=2%7C14; __atuvs=58e6e095f1abae55001
-""" 
+
+with open('cookies') as fp:
+    COOKIES_RAW = fp.read()
 COOKIES = dict(map(str.strip, s.split('=')) for s in COOKIES_RAW.strip().split(';'))
 
 session = requests.Session()
