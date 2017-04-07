@@ -1,4 +1,14 @@
+'''
+   leetcode
+   -------
+   Auto scrap the problem information with initial code template created
+
+   :author: babykick
+
+'''
 import os
+import re
+import datetime
 import requests
 from bs4 import BeautifulSoup
 import click
@@ -15,21 +25,23 @@ session = requests.Session()
 session.cookies.update(COOKIES)
 session.headers.update({'user-agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.98 Safari/537.36'})
 
+RE_CODE = re.compile(r"{'value': 'python', 'text': 'Python', 'defaultCode': '(.*?)'", re.M)
 
-TEMPLATE = """
-'''
+TEMPLATE = """'''
+{url}
+
 Problem:
-    {description}
+{description}
     
 Example:
-    {example}
+{example}
 
-:author :babykick
+:author: babykick
+:date: {date}
 '''
 
-class Solution(object):
-    def solve(*args, **kwargs):
-        return NotImplementedError
+
+{python_default_code}
 
 
 if __name__ == '__main__':
@@ -40,26 +52,38 @@ if __name__ == '__main__':
     ]
     
     for sample in test_cases:
-        assert(Solution().solve(sample[0]), sample[1])
+        assert(Solution().{func_name}(sample[0]), sample[1])
     
 """
 
-Problem = namedtuple('Problem', ['name', 'description', 'example'])
+Problem = namedtuple('Problem', ['name', 'description', 'example', 'python_default_code'])
 
 
-def fetch(name):
+def get_url(name):
     if 'http' in name:
-        name = name.split('/problems/')[1].split('/')[0]
-    print('name:', name)
+        return name
     url = BASE_URL.format(problem_name=name)
+    return url
+
+def fetch(url):
     print('fetch', url)
+    name = url.split('/problems/')[1].split('/')[0]
     r = session.get(url)
-    #print(r.text)
+    default_code = RE_CODE.search(r.text)
+    if default_code:
+        code = default_code.group(1)
+        lines = code.split(r'\u000D\u000A')
+        default_code = '\n'.join(lines)
+        default_code = default_code.replace(r'\u0022', '"')
+  
     soup = BeautifulSoup(r.text, 'lxml')
     q = soup.find(class_='question-content')
-    desc = '\n'.join(sect.text for sect in q.find_all('p')[1:-2])
-    example = q.find('pre').text
-    return Problem(name, desc, example)
+    desc = '\n'.join(sect.text for sect in q.find_all('p')[1:-2]).strip()
+    example = q.find('pre')
+    if not example:
+        example = q.find_all('p')[-2]
+    example = example.text.strip()
+    return Problem(name, desc, example, default_code)
     
  
 def uniform(name):
@@ -68,16 +92,21 @@ def uniform(name):
                .replace('\t','_')
 
 
+def make_template(**context):
+    return TEMPLATE.format(**context)
+
 @click.command()
 @click.argument('name')
 def main(name):
-    problem = fetch(name)
-    print(problem)
+    url = get_url(name)
+    problem = fetch(url)
     if not os.path.isdir('progress'):
         os.makedirs('progress')
     out_path = 'progress/{}.py'.format(problem.name)
+    func_name = problem.python_default_code.split('def ')[1].split('(')[0]
+    template = make_template(**problem._asdict(), func_name=func_name, url=url, date=datetime.datetime.now().strftime('%Y-%m-%d'))
     with open(out_path, 'w') as fp:
-        fp.write(TEMPLATE.format(**problem._asdict()))
+        fp.write(template)
         print('Wrote to', out_path)
 
 
