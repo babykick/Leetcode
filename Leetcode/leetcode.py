@@ -72,6 +72,7 @@ def get_url(name):
 def fetch(url):
     print('fetch', url)
     name = url.split('/problems/')[1].split('/')[0]
+    name = uniform(name)
     r = session.get(url)
     default_code = RE_CODE.search(r.text)
     if default_code:
