@@ -19,6 +19,7 @@ import click
 
 BASE_URL = 'https://leetcode.com/problems/{problem_name}/'
 
+# Paste your login cookies raw string or put it in a file named "cookies"
 with open('cookies') as fp:
     COOKIES_RAW = fp.read()
 COOKIES = dict(map(str.strip, s.split('=')) for s in COOKIES_RAW.strip().split(';'))
