@@ -17,4 +17,4 @@ or
 
 The code template will be wrote into progress/hamming-distance.py
  
-You could change whatever by personal settings in `TEMPLATE` , `COOKIES_RAW` or others.
+To use your account, change personal settings for `TEMPLATE` , `COOKIES_RAW` or others.
