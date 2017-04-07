@@ -50,12 +50,11 @@ if __name__ == '__main__':
     test_cases = [
         # tuple of (input, output)
         (, ),
-        (, )
     ]
     
     for sample in test_cases:
         inp, outp = sample
-        assert(Solution().hammingDistance(*inp) == outp)
+        assert(Solution().{func_name}(*inp) == outp)
     
 """
 
