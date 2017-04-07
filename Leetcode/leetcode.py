@@ -3,6 +3,7 @@
    --------
    Auto scrap the problem information with solution code template created
 
+   :copyright: (c) 2017 by babykick.
    :author: babykick
 
 '''
@@ -54,7 +55,8 @@ if __name__ == '__main__':
     ]
     
     for sample in test_cases:
-        assert(Solution().{func_name}(sample[0]), sample[1])
+        inp, outp = sample
+        assert(Solution().hammingDistance(*inp) == outp)
     
 """
 
@@ -66,6 +68,7 @@ def get_url(name):
         return name
     url = BASE_URL.format(problem_name=name)
     return url
+
 
 def fetch(url):
     print('fetch', url)
@@ -96,6 +99,7 @@ def uniform(name):
 
 def make_template(**context):
     return TEMPLATE.format(**context)
+
 
 @click.command()
 @click.argument('name')
