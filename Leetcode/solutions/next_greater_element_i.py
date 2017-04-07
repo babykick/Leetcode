@@ -43,10 +43,7 @@ class Solution(object):
         for x in findNums:
             a = -1
             if nums.index(x) < len(nums) -1:
-                try:
-                   a = next(n for n in nums[nums.index(x)+1:] if n > x)
-                except StopIteration:
-                   pass
+                a = next((n for n in nums[nums.index(x)+1:] if n > x), -1)
             results.append(a)
         return results
 
