@@ -1,7 +1,7 @@
 '''
    leetcode
-   -------
-   Auto scrap the problem information with initial code template created
+   --------
+   Auto scrap the problem information with solution code template created
 
    :author: babykick
 
@@ -9,10 +9,12 @@
 import os
 import re
 import datetime
+from collections import namedtuple
+
 import requests
 from bs4 import BeautifulSoup
 import click
-from collections import namedtuple
+
 
 
 BASE_URL = 'https://leetcode.com/problems/{problem_name}/'
