@@ -13,5 +13,5 @@ I wrote an useful script to scrap the problem from leecode site and also the ini
 or
 > python leecode.py https://leetcode.com/problems/hamming-distance/
 
-The code template will be wrote into progress/<problem_name>.py 
+The code template will be wrote into progress/hamming-distance.py 
 ```
