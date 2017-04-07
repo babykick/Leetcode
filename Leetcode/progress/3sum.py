@@ -35,5 +35,6 @@ if __name__ == '__main__':
     ]
     
     for sample in test_cases:
-        assert(Solution().threeSum(sample[0]), sample[1])
+        inp, outp = sample
+        assert(Solution().hammingDistance(*inp) == outp)
     
