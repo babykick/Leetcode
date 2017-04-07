@@ -1,6 +1,6 @@
 My approach to leetcode
 
-I wrote an useful script to scrap the problem from leecode site with initial code generated.
+I wrote an useful script to scrap the problem from leecode with initial code generated.
 
 ### Usage
 
