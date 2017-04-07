@@ -31,18 +31,21 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         found = []
-        for a in nums:
-            res = self.twoSum(nums, -a)
-            if res:
-                found.append([a, nums[res[0]], nums[res[1]]])
+        for i, a in enumerate(nums):
+            res = self.twoSum(nums, -a, i)
+            for r in res:
+                k = sorted([a, nums[r[0]], nums[r[1]]])
+                if k not in found:
+                    found.append(k)
         return found
 
-    def twoSum(self, nums, target):
+    def twoSum(self, nums, target, start):
         """
         :type nums: List[int]
         :type target: int
         :rtype: List[int]
         """
+        res = []
         d = {}
         for i, e in enumerate(nums):
             d.setdefault(e, []).append(i)
@@ -51,8 +54,9 @@ class Solution(object):
             b = target - a
             if b in d: # found
                 for j in d[b]: # search the expand list
-                   if i != j:
-                       return [i, j]
+                   if i > start and j > i:
+                       res.append([i, j])
+        return res
 
 
 if __name__ == '__main__':
