@@ -22,7 +22,7 @@ A solution set is:
 :author: babykick
 :date: 2017-04-07
 '''
-
+import bisect
 
 class Solution(object):
     def threeSum(self, nums):
@@ -30,42 +30,44 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        found = []
+        rv = []
+        nums.sort()
+        if len(nums)< 3: 
+            return []
+            
         for i, a in enumerate(nums):
-            res = self.twoSum(nums, -a, i)
-            for r in res:
-                k = sorted([a, nums[r[0]], nums[r[1]]])
-                if k not in found:
-                    found.append(k)
-        return found
+            for result in self.twoSum(nums[i+1:], -a):
+                b, c = result
+                if sorted([a, b, c]) not in rv:
+                    rv.append(sorted([a, b, c]))
+       
+        return rv
 
-    def twoSum(self, nums, target, start):
+
+    def twoSum(self, numbers, target):
         """
-        :type nums: List[int]
+        :type numbers: List[int]
         :type target: int
         :rtype: List[int]
         """
-        res = []
-        d = {}
-        for i, e in enumerate(nums):
-            d.setdefault(e, []).append(i)
-
-        for i, a in enumerate(nums):
+        rv = []
+        for i, a in enumerate(numbers):
             b = target - a
-            if b in d: # found
-                for j in d[b]: # search the expand list
-                   if i > start and j > i:
-                       res.append([i, j])
-        return res
+            j = bisect.bisect_left(numbers, b, lo=i+1)
+            if j != len(numbers) and j != i and numbers[j] == b:
+                rv.append([a, b])
+        return rv
 
 
 if __name__ == '__main__':
     test_cases = [
         # tuple of (input, output)
         ([-1, 0, 1, 2, -1, -4], [ [-1, 0, 1], [-1, -1, 2]]),
+        ([-2,0,1,1,2], [[-2,0,2],[-2,1,1]])
     ]
     
     for sample in test_cases:
         inp, outp = sample
-        assert(Solution().threeSum(inp) == outp)
-    
+        rs = sorted(Solution().threeSum(inp)) == sorted(outp)
+        print('test', inp, outp, rs)
+         
