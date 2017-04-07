@@ -7,6 +7,7 @@ I wrote an useful script to scrap the problem from leecode site and also the ini
 ```bash
 # Install
 > pip install -r requirements.txt
+
 # Fetch problems
 > python leecode.py hamming-distance
 or
