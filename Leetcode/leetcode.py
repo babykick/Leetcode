@@ -4,8 +4,7 @@
    Auto scrap the problem information with solution code template created
 
    :copyright: (c) 2017 by babykick.
-   :author: babykick
-
+   
 '''
 import os
 import re
