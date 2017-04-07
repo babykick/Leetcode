@@ -30,11 +30,12 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        if len(nums) < 3: 
+            return []
+
         rv = []
         nums.sort()
-        if len(nums)< 3: 
-            return []
-            
+    
         for i, a in enumerate(nums):
             for result in self.twoSum(nums[i+1:], -a):
                 b, c = result
