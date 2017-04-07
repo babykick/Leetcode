@@ -28,7 +28,7 @@ class Solution(object):
         keys = ('qwertyuiop', 'asdfghjkl', 'zxcvbnm')
         for word in words:
             for k in keys:
-                if word.lower().strip(k) == '':
+                if word.lower().strip(k) == '':  # all chars stripped means all match
                     results.append(word)
                     break
         return results

@@ -54,7 +54,7 @@ if __name__ == '__main__':
     
     for sample in test_cases:
         inp, outp = sample
-        assert(Solution().{func_name}(*inp) == outp)
+        assert(Solution().{func_name}(inp) == outp)
     
 """
 
