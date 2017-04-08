@@ -24,8 +24,8 @@ Output:
 
 class Solution(object):
     '''
-       Hash each element to position according to element value,
-       use swap recusively to avoid extra memory 
+       Fit each element to position according to element value, like hash
+       inplace swap to avoid extra memory 
     '''
     def findDisappearedNumbers(self, nums):
         """
