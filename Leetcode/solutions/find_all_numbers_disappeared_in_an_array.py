@@ -38,9 +38,9 @@ class Solution(object):
                 break
             if nums[cursor] - 1 != cursor: # current element not inplace
                 if nums[nums[cursor] - 1] == nums[cursor]: # target equals source
-                    cursor += 1 # target same as current, no swap, move to next
+                    cursor += 1 # target is same as current, no swap, move to next
                 else:
-                    nums[nums[cursor] - 1], nums[cursor] = nums[cursor], nums[nums[cursor] - 1] # swap
+                    nums[nums[cursor] - 1], nums[cursor] = nums[cursor], nums[nums[cursor] - 1] # different, swap
             else: # already in place
                 cursor += 1 # move to next
         
