@@ -55,6 +55,5 @@ if __name__ == '__main__':
     
     for sample in test_cases:
         inp, outp = sample
-      
-        print(Solution().maxDepth(inp), outp)
+        assert(Solution().maxDepth(inp) ==  outp)
     
