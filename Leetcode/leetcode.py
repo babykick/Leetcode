@@ -8,6 +8,7 @@
 '''
 import os
 import re
+import sys
 import datetime
 from collections import namedtuple
 
@@ -99,20 +100,29 @@ def uniform(name):
 def make_template(**context):
     return TEMPLATE.format(**context)
 
+def solved_count():
+    return len(os.listdir('solutions'))
+
+
 
 @click.command()
-@click.argument('name')
-def main(name):
-    url = get_url(name)
-    problem = fetch(url)
-    if not os.path.isdir('progress'):
-        os.makedirs('progress')
-    out_path = 'progress/{}.py'.format(problem.name)
-    func_name = problem.python_default_code.split('def ')[1].split('(')[0] if problem.python_default_code else 'unknown'
-    template = make_template(**problem._asdict(), func_name=func_name, url=url, date=datetime.datetime.now().strftime('%Y-%m-%d'))
-    with open(out_path, 'w') as fp:
-        fp.write(template)
-        print('Wrote to', out_path)
+@click.argument('name', required=False)
+@click.option('--solved', is_flag=True, help='Num of solved problems')
+def main(name, solved):
+    if solved:
+        print('Solved:', solved_count())
+    
+    if name:
+        url = get_url(name)
+        problem = fetch(url)
+        if not os.path.isdir('progress'):
+            os.makedirs('progress')
+        out_path = 'progress/{}.py'.format(problem.name)
+        func_name = problem.python_default_code.split('def ')[1].split('(')[0] if problem.python_default_code else 'unknown'
+        template = make_template(**problem._asdict(), func_name=func_name, url=url, date=datetime.datetime.now().strftime('%Y-%m-%d'))
+        with open(out_path, 'w') as fp:
+            fp.write(template)
+            print('Wrote to', out_path)
 
 
 if __name__ == '__main__':

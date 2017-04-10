@@ -40,7 +40,7 @@ class Solution(object):
             for j in range(len(grid[0])):
                 if grid[i][j] == 1:
                     #print('check', i, j)
-                    # check all around
+                    # check around
                     for dx, dy in offset:
                         if get_near(i + dy, j + dx) == 1:
                             #print('near', i + dy, j + dx)
