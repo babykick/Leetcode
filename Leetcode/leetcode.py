@@ -108,7 +108,7 @@ def main(name):
     if not os.path.isdir('progress'):
         os.makedirs('progress')
     out_path = 'progress/{}.py'.format(problem.name)
-    func_name = problem.python_default_code.split('def ')[1].split('(')[0]
+    func_name = problem.python_default_code.split('def ')[1].split('(')[0] if problem.python_default_code else 'unknown'
     template = make_template(**problem._asdict(), func_name=func_name, url=url, date=datetime.datetime.now().strftime('%Y-%m-%d'))
     with open(out_path, 'w') as fp:
         fp.write(template)
